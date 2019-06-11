@@ -3,9 +3,25 @@ import java.util.*;
 public class Main
 {
     public static void main(String[] args) {
-        MathProblem problem = new Main().makeProblem();
-        System.out.println(problem.Problem);
-        System.out.println(problem.Solution);
+        System.out.println("Solve this eqaution. To quit enter q.");
+        Main m = new Main();
+        Scanner s = new Scanner(System.in);
+        while (true) {
+            MathProblem problem = m.makeProblem();
+            System.out.println(problem.Problem);
+            String input = s.nextLine();
+            if (input.equals("q")) {
+                break;
+            }
+            if (problem.Solution.toString().equals(input)) {
+                System.out.println("Correct!");
+            }
+            else
+            {
+                System.out.println("Wrong! The correct answer was: " + problem.Solution);
+            }
+        }
+        s.close();
     }
 
     MathProblem makeProblem()
