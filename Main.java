@@ -10,20 +10,20 @@ public class Main
 
     MathProblem makeProblem()
     {
-        List<Float> numbers = new ArrayList<Float>();
+        List<Integer> numbers = new ArrayList<Integer>();
         List<Operators> operators = new ArrayList<Operators>();
         Random r = new Random();
         MathProblem p = new MathProblem();
         
         //Make some random numbers
         for (int i = 0; i < r.nextInt(4) + 2; i++) {
-            numbers.add((float)r.nextInt(9) + 1);
+            numbers.add(r.nextInt(9) + 1);
         }
 
         //And get operators for them
         Operators[] op = Operators.values();
         for (int i = 0; i < numbers.size() - 1; i++) {
-            operators.add(op[r.nextInt(4)]);
+            operators.add(op[r.nextInt(3)]);
         }
 
         //Write the problem down
@@ -37,10 +37,6 @@ public class Main
         
         //First let's do multiplication and division
         for (int i = 0; i < operators.size(); i++) {
-            
-            System.out.println(numbers);
-            System.out.println(operators);
-
             switch (operators.get(i)) {
                 case MULTIPLY:
                 numbers.set(i, numbers.get(i) * numbers.get(i + 1));
@@ -61,10 +57,6 @@ public class Main
         
         //Then addition and subtraction
         for (int i = 0; i < operators.size(); i++) {
-                
-            System.out.println(numbers);
-            System.out.println(operators);
-
             switch (operators.get(i)) {
                 case ADD:
                 numbers.set(i, numbers.get(i) + numbers.get(i + 1));
@@ -82,10 +74,6 @@ public class Main
                 break;
             }
         }
-                
-        System.out.println(numbers);
-        System.out.println(operators);
-
         p.Solution = numbers.get(0);
         return p;
     }
@@ -100,7 +88,7 @@ public class Main
 
     class MathProblem
     {
-        public Float Solution = 0f;
+        public Integer Solution = 0;
         public String Problem = "";
     }
 }
