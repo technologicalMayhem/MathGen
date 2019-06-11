@@ -1,9 +1,10 @@
+import java.math.BigDecimal;
 import java.util.*;
 
 public class Main
 {
     public static void main(String[] args) {
-        System.out.println("Solve this eqaution. To quit enter q.");
+        System.out.println("Solve this eqaution. Round to two decimals places. To quit enter q.");
         Main m = new Main();
         Scanner s = new Scanner(System.in);
         while (true) {
@@ -13,7 +14,7 @@ public class Main
             if (input.equals("q")) {
                 break;
             }
-            if (problem.Solution.toString().equals(input)) {
+            if (problem.Solution.equals(input)) {
                 System.out.println("Correct!");
             }
             else
@@ -26,26 +27,26 @@ public class Main
 
     MathProblem makeProblem()
     {
-        List<Integer> numbers = new ArrayList<Integer>();
+        List<Float> numbers = new ArrayList<Float>();
         List<Operators> operators = new ArrayList<Operators>();
         Random r = new Random();
         MathProblem p = new MathProblem();
         
         //Make some random numbers
         for (int i = 0; i < r.nextInt(4) + 2; i++) {
-            numbers.add(r.nextInt(9) + 1);
+            numbers.add((float)r.nextInt(9) + 1);
         }
 
         //And get operators for them
         Operators[] op = Operators.values();
         for (int i = 0; i < numbers.size() - 1; i++) {
-            operators.add(op[r.nextInt(3)]);
+            operators.add(op[r.nextInt(4)]);
         }
 
         //Write the problem down
         char[] c = new char[]{'+','-','*','/'};
         for (int i = 0; i < numbers.size(); i++) {
-            p.Problem += numbers.get(i).toString();
+            p.Problem += formatFloat(numbers.get(i));
             if (operators.size() - 1 >= i) {
                 p.Problem += c[operators.get(i).ordinal()];
             }
@@ -90,8 +91,23 @@ public class Main
                 break;
             }
         }
-        p.Solution = numbers.get(0);
+        
+        p.Solution = formatFloat(round(numbers.get(0), 2));
         return p;
+    }
+
+    public static float round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);
+        return bd.floatValue();
+    }
+
+    public static String formatFloat(float f)
+    {
+        if(f == (long) f)
+            return String.format("%d",(long)f);
+        else
+            return String.format("%s",f);
     }
     
     enum Operators
@@ -104,7 +120,7 @@ public class Main
 
     class MathProblem
     {
-        public Integer Solution = 0;
+        public String Solution = "";
         public String Problem = "";
     }
 }
